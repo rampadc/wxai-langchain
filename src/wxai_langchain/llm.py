@@ -10,13 +10,8 @@ try:
 except ImportError:
     raise ImportError("Could not import langchain: Please install langchain.")
 
-try:
-    from genai.schemas import GenerateParams
-except ImportError:
-    raise ImportError("Could not import genai: Please install ibm-generative-ai")
-
 from wxai_langchain.credentials import Credentials
-from wxai_langchain.extensions.langchain.prompt import Prompt
+from wxai_langchain.prompt import Prompt
 
 logger = logging.getLogger(__name__)
 
@@ -26,12 +21,7 @@ __all__ = ["LangChainInterface"]
 class LangChainInterface(LLM, BaseModel):
     """
     Wrapper around IBM watsonx.ai models.
-    To use, you should have the ``genai`` python package installed
-    and initialize the credentials attribute of this class with
-    an instance of ``genai.Credentials``. Model specific parameters
-    can be passed through to the constructor using the ``params``
-    parameter, which is an instance of GenerateParams.
-    Example:
+
         .. code-block:: python
             llm = LangChainInterface(model="google/flan-ul2", credentials=creds)
     """
