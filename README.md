@@ -5,7 +5,7 @@ This is a Python library to add a LangChain interface to IBM watsonx.ai. This is
 To install,
 
 ```shell
-pip install wxai_langchain
+pip install wxai-langchain
 ```
 
 To use, see the examples folder. This LangChain interface is not compatible with IBM's GenAI GenerateParams schema object.
