@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wxai-langchain"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   {name="Cong Nguyen", email="cong.nguyen@au1.ibm.com"}
 ]
@@ -17,9 +17,17 @@ dependencies = [
     "pydantic<=1.10.10",
     "langchain>=0.0.200",
     "ibm_cloud_sdk_core>=3.16.7",
-    "aiohttp>=3.8.4"
+    "aiohttp>=3.8.4",
+    "ibm-watson-machine-learning>=1.0.311"
 ]
 requires-python = ">=3.9"
+
+
+[project.optional-dependencies]
+dev = [
+  "python-dotenv>=1.0.0",
+  "datasets==2.11.0"
+]
 
 [options]
 package_dir=[
@@ -30,3 +38,6 @@ package_dir=[
 where=[
   "src/genai"
 ]
+
+[project.urls]
+source = "https://github.com/rampadc/wxai-langchain"

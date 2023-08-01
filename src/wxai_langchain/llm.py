@@ -10,8 +10,10 @@ try:
 except ImportError:
     raise ImportError("Could not import langchain: Please install langchain.")
 
+from ibm_watson_machine_learning.foundation_models import Model
+from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
+
 from wxai_langchain.credentials import Credentials
-from wxai_langchain.prompt import Prompt
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +25,9 @@ class LangChainInterface(LLM, BaseModel):
     Wrapper around IBM watsonx.ai models.
 
         .. code-block:: python
-            llm = LangChainInterface(model="google/flan-ul2", credentials=creds)
+            from ibm_watson_machine_learning.foundation_models import Model
+
+            llm = LangChainInterface(model=ModelTypes.FLAN_UL2.value, params=generate_params, credentials=creds)
     """
 
     credentials: Credentials = None
@@ -38,7 +42,7 @@ class LangChainInterface(LLM, BaseModel):
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
         """Get the identifying parameters."""
-        _params = self.params or GenerateParams()
+        _params = self.params or GenParams()
         return {
             **{"model": self.model},
             **{"params": _params},
@@ -61,12 +65,16 @@ class LangChainInterface(LLM, BaseModel):
                 llm = LangChainInterface(model_id="google/flan-ul2", credentials=creds)
                 response = llm("What is a molecule")
         """
-        params = self.params or GenerateParams()
+        params = self.params or GenParams()
 
-        access_token = self.credentials.get_access_token()
-        wml_prompt = Prompt(access_token, self.credentials.project_id, self.credentials.api_endpoint)
-        text = wml_prompt.generate(prompt, self.model, params)
-        
+        wml_model = Model(
+            model_id=self.model,
+            params=params,
+            credentials=self.credentials.wml_credentials,
+            project_id=self.credentials.project_id
+        )
+        text = wml_model.generate_text(prompt, params)
+
         logger.info("Output of watsonx.ai call: {}".format(text))
         if stop is not None:
             text = enforce_stop_tokens(text, stop)

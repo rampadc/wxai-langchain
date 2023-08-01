@@ -26,10 +26,9 @@ class Credentials:
         if project_id is None:
             raise ValueError("project_id must be provided")
         self.project_id = project_id
-        
-    def get_access_token(self):
-        access_token = IAMTokenManager(
-            apikey = self.api_key,
-            url = "https://iam.cloud.ibm.com/identity/token"
-        ).get_token()
-        return access_token
+
+        # New dict for ibm-watson-machine-learning-sdk
+        self.wml_credentials = {
+            "apikey": self.api_key,
+            "url": self.api_endpoint
+        }
