@@ -41,3 +41,4 @@ where=[
 
 [project.urls]
 source = "https://github.com/rampadc/wxai-langchain"
+"Homepage" = "https://github.com/rampadc/wxai-langchain"

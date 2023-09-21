@@ -2,6 +2,8 @@
 
 This is a Python library to add a LangChain interface to IBM watsonx.ai. This is not an IBM project and is not supported by IBM.
 
+GitHub repo: https://github.com/rampadc/wxai-langchain
+
 ```shell
 pip install wxai-langchain==0.0.3
 ```
